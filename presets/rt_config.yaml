@@ -1,0 +1,190 @@
+epochs: 2000
+data_dir: null
+log_dir: null
+lufs: -18
+sr: 44100
+chunk_duration: 12
+chunk_overlap: 5
+device: cuda
+batch_size: 35
+dataset: medley_vocal
+regularise_delay: true
+model:
+  _target_: torch.nn.Sequential
+  _args_:
+  - _target_: modules.fx.Peak
+    sr: 44100
+    freq: 800
+    min_freq: 33
+    max_freq: 5400
+  - _target_: modules.fx.Peak
+    sr: 44100
+    freq: 4000
+    min_freq: 200
+    max_freq: 17500
+  - _target_: modules.fx.LowShelf
+    sr: 44100
+    freq: 115
+    min_freq: 30
+    max_freq: 200
+  - _target_: modules.fx.HighShelf
+    sr: 44100
+    freq: 6000
+    min_freq: 750
+    max_freq: 8300
+  - _target_: modules.fx.LowPass
+    sr: 44100
+    freq: 17500
+    min_freq: 200
+    max_freq: 18000
+  - _target_: modules.fx.HighPass
+    sr: 44100
+    freq: 200
+    min_freq: 16
+    max_freq: 5300
+  - _target_: modules.fx.CompressorExpander
+    sr: 44100
+    cmp_ratio: 2.0
+    exp_ratio: 0.5
+    at_ms: 50.0
+    rt_ms: 50.0
+    avg_coef: 0.3
+    cmp_th: -18.0
+    exp_th: -48.0
+    make_up: 0.0
+    lookahead: true
+    max_lookahead: 15
+  - _target_: modules.fx.SendFXsAndSum
+    _args_:
+    # - _target_: modules.fx.SurrogateDelay
+    - _target_: modules.rt.RealTimeDelay
+      sr: 44100
+      delay: 400
+      # dropout: 0
+      # straight_through: true
+      recursive_eq: true
+      ir_duration: 4
+      eq:
+        _target_: modules.fx.LowPass
+        sr: 44100
+        freq: 8000
+        min_freq: 200
+        max_freq: 16000
+        min_Q: 0.5
+        max_Q: 2
+    # - _target_: modules.fx.FDN
+    - _target_: modules.rt.RealTimeFDN
+      sr: 44100
+      delays:
+      - 997
+      - 1153
+      - 1327
+      - 1559
+      - 1801
+      - 2099
+      num_decay_freq: 49
+      delay_independent_decay: true
+      ir_duration: 12
+      eq:
+        _target_: torch.nn.Sequential
+        _args_:
+        - _target_: modules.fx.Peak
+          sr: 44100
+          freq: 800
+          min_freq: 200
+          max_freq: 2500
+          min_Q: 0.1
+          max_Q: 3
+        - _target_: modules.fx.Peak
+          sr: 44100
+          freq: 4000
+          min_freq: 600
+          max_freq: 7000
+          min_Q: 0.1
+          max_Q: 3
+        - _target_: modules.fx.LowShelf
+          sr: 44100
+          freq: 115
+          min_freq: 30
+          max_freq: 450
+        - _target_: modules.fx.HighShelf
+          sr: 44100
+          freq: 8000
+          min_freq: 1500
+          max_freq: 16000
+    cross_send: true
+    pan_direct: true
+optimiser:
+  _target_: torch.optim.Adam
+  lr: 0.01
+mss:
+  fft_sizes:
+  - 128
+  - 512
+  - 2048
+  hop_sizes:
+  - 32
+  - 128
+  - 512
+mldr:
+  s_taus:
+  - 50
+  - 100
+  l_taus:
+  - 1000
+  - 2000
+loss_fn:
+  _target_: loss.SumLosses
+  weights:
+  - 1.0
+  - 0.5
+  - 0.5
+  - 0.25
+  loss_fns:
+  - _target_: auraloss.freq.MultiResolutionSTFTLoss
+    fft_sizes:
+    - 128
+    - 512
+    - 2048
+    hop_sizes:
+    - 32
+    - 128
+    - 512
+    win_lengths:
+    - 128
+    - 512
+    - 2048
+    sample_rate: 44100
+    perceptual_weighting: true
+  - _target_: auraloss.freq.SumAndDifferenceSTFTLoss
+    fft_sizes:
+    - 128
+    - 512
+    - 2048
+    hop_sizes:
+    - 32
+    - 128
+    - 512
+    win_lengths:
+    - 128
+    - 512
+    - 2048
+    sample_rate: 44100
+    perceptual_weighting: true
+  - _target_: loss.ldr.MLDRLoss
+    sr: 44100
+    s_taus:
+    - 50
+    - 100
+    l_taus:
+    - 1000
+    - 2000
+  - _target_: loss.ldr.MLDRLoss
+    sr: 44100
+    mid_side: true
+    s_taus:
+    - 50
+    - 100
+    l_taus:
+    - 1000
+    - 2000
