@@ -19,7 +19,7 @@ def find_time_offset(x: torch.Tensor, y: torch.Tensor):
     return torch.where(shifts >= N, shifts - N - M + 1, shifts)
 
 
-def internal_vocals(
+def internal_vocal(
     song_id, loudness: float = -18.0, return_data=True, side_energy_threshold=-10
 ):
     wet_subdir = "multi"
