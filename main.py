@@ -142,7 +142,7 @@ def train(cfg: DictConfig):
             case _:
                 raise ValueError(cfg.dataset)
     else:
-        iterator = internal_vocal
+        iterator = medley_vocal
 
     for dry_file, wet_file, sr, raw_x, raw_y, shifts in iterator(
         cfg.data_dir, loudness=cfg.lufs
