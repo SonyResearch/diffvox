@@ -1,0 +1,63 @@
+_target_: torch.nn.Sequential
+_args_:
+  - _target_: modules.fx.Peak
+    sr: ${sr}
+    freq: 800
+    min_freq: 33
+    max_freq: 5400
+  - _target_: modules.fx.Peak
+    sr: ${sr}
+    freq: 4000
+    min_freq: 200
+    max_freq: 17500
+  - _target_: modules.fx.LowShelf
+    sr: ${sr}
+    freq: 115
+    min_freq: 30
+    max_freq: 200
+  - _target_: modules.fx.HighShelf
+    sr: ${sr}
+    freq: 6000
+    min_freq: 750
+    max_freq: 8300
+  - _target_: modules.fx.LowPass
+    sr: ${sr}
+    freq: 17500
+    min_freq: 200
+    max_freq: 18000
+  - _target_: modules.fx.HighPass
+    sr: ${sr}
+    freq: 200
+    min_freq: 16
+    max_freq: 5300
+  - _target_: modules.fx.CompressorExpander
+    sr: ${sr}
+    cmp_ratio: 2.0
+    exp_ratio: 0.5
+    at_ms: 50.0
+    rt_ms: 50.0
+    avg_coef: 0.3
+    cmp_th: -18.0
+    exp_th: -48.0
+    make_up: 0.0
+    lookahead: true
+    max_lookahead: 15
+  - _target_: modules.fx.SendFXsAndSum
+    _args_:     
+    - _target_: modules.fx.SurrogateDelay
+      sr: ${sr}
+      delay: 400
+      dropout: 0
+      straight_through: true
+      recursive_eq: true
+      ir_duration: 4
+      eq:
+        _target_: modules.fx.LowPass
+        sr: ${sr}
+        freq: 8000
+        min_freq: 200
+        max_freq: 16000
+        min_Q: 0.5
+        max_Q: 2
+    cross_send: true
+    pan_direct: true
