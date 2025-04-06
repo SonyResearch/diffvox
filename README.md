@@ -76,7 +76,7 @@ python scripts/pca_trsfm.py selected-runs/medley_vox_0919-0926/
 ```
 
 This script will compute the mean and covariance of the parameter logits in`selected-runs/medley_vox_0919-0926/` and store two files, `feature_mask.npy` and `gaussian.npz` in the same folder.
-The former contains a 1D mask $\{0, 1\}^{152}$ used to select the minimum set of parameters to reproduce the effect ($\mathbb{R}^{152} \to \mathbb{R}^{130}$).
+The former contains a 1D mask $\lbrace0, 1\rbrace^{152}$ used to select the minimum set of parameters to reproduce the effect ($\mathbb{R}^{152} \to \mathbb{R}^{130}$).
 The unused dimensions are the unilossless matrix `U` in the FDN due to the parameterisation and the surrogate variable $\eta$ in the Ping-Pong delay.
 The latter contains the sample mean ($\mathbb{R}^{130}$) and covariance ($\mathbb{R}^{130 \times 130}$) of the parameters in the form of a Gaussian distribution.
 
