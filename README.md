@@ -1,6 +1,11 @@
 # DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions
 WIP.
 
+## Environment setup
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Retrieving effect parameters on paired data
 
@@ -74,3 +79,9 @@ This script will compute the mean and covariance of the parameter logits in`sele
 The former contains a 1D mask $\{0, 1\}^{152}$ used to select the minimum set of parameters to reproduce the effect ($\mathbb{R}^{152} \to \mathbb{R}^{130}$).
 The unused dimensions are the unilossless matrix `U` in the FDN due to the parameterisation and the surrogate variable $\eta$ in the Ping-Pong delay.
 The latter contains the sample mean ($\mathbb{R}^{130}$) and covariance ($\mathbb{R}^{130 \times 130}$) of the parameters in the form of a Gaussian distribution.
+
+## Preset datasets
+
+The preset datasets, **Internal** and **MedleyDB**, are stored in the folder [`presets`](presets/).
+Both folders contain the files computed by the previous steps [collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) and [features for PCA analysis](#features-for-pca-analysis).
+The **Internal** folder contains one more numpy file `train_index.npy` which contains a 1D array of the indices $\mathbb{Z}^{365}$ of the training samples for the PCA we used in the paper.
