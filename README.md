@@ -44,12 +44,12 @@ Please edit the file paths in the txt file to point to the correct location of t
 The results are stored in `~/processed/medley_vocal_log`.
 
 
-## Collecting retrieval parameters
+## Collecting presets from multiple training runs
 
 This step is to collect the retrieval parameters from multiple training runs into single file/folder for further processing.
 
 ```bash
-python get_params.py --loss-thresh 4 --fluc-thresh 0.2 ~/processed/medley_vocal_log selected-runs/medley_vox_0919-0926/ 2024-09-17:00 --end_date 2024-09-23:00
+python scripts/get_params.py --loss-thresh 4 --fluc-thresh 0.2 ~/processed/medley_vocal_log selected-runs/medley_vox_0919-0926/ 2024-09-17:00 --end_date 2024-09-23:00
 ```
 This command will collect the retrieval parameters from the training logs in the folder `~/processed/medley_vocal_log` that have:
 - minimum loss less than 4
@@ -63,3 +63,14 @@ The script create a folder `selected-runs/medley_vox_0919-0926/` and store two f
 > **_Note:_**
 > - The `--end_date` argument is optional. If not provided, the script will collect the logs up to the current date.
 > - The script assume the collected training runs in the specified time range have the same effect configuration (run with the same `config.yaml`). Please make sure the training runs are consistent.
+
+## Features for PCA analysis
+
+```bash
+python scripts/pca_trsfm.py selected-runs/medley_vox_0919-0926/
+```
+
+This script will compute the mean and covariance of the parameter logits in`selected-runs/medley_vox_0919-0926/` and store two files, `feature_mask.npy` and `gaussian.npz` in the same folder.
+The former contains a 1D mask $\{0, 1\}^{152}$ used to select the minimum set of parameters to reproduce the effect ($\mathbb{R}^{152} \to \mathbb{R}^{130}$).
+The unused dimensions are the unilossless matrix `U` in the FDN due to the parameterisation and the surrogate variable $\eta$ in the Ping-Pong delay.
+The latter contains the sample mean ($\mathbb{R}^{130}$) and covariance ($\mathbb{R}^{130 \times 130}$) of the parameters in the form of a Gaussian distribution.
