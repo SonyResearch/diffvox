@@ -104,3 +104,7 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 ## Analysis notebooks
 
 Coming soon.
+
+## Additional materials
+- [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
+  - The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
