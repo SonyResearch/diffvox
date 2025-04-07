@@ -1,5 +1,20 @@
-# DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions
-WIP.
+# Differentiable Vocal Effects Model
+
+WIP. The accompanying code for the paper *DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions* (under review).
+
+
+## Table of contents
+- [Requirements](#requirements)
+- [Environment setup](#environment-setup)
+- [Retrieving effect parameters on paired data](#retrieving-effect-parameters-on-paired-data)
+- [Quick start](#quick-start)
+    - [Examples](#examples)
+- [Processing on multiple tracks](#processing-on-multiple-tracks)
+    - [MedleyDB vocals](#medleydb-vocals)
+- [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs)
+- [Features for PCA analysis](#features-for-pca-analysis)
+- [Preset datasets](#preset-datasets)
+- [Analysis notebooks](#analysis-notebooks)
 
 ## Environment setup
 
@@ -19,8 +34,8 @@ The following command will run the retrieval process on one track:
 python main.py
 ```
 
-Editing the file `cfg/config.yaml` or passing the arguments will allow the user to change the parameters of the retrieval process. 
-
+Editing the file [`cfg/config.yaml`](cfg/config.yaml) or passing the arguments will allow the user to change the parameters of the retrieval process. 
+For details on configuring the yaml file and passing arguments, please refer to the documentation of [hydra](https://hydra.cc/docs/intro/).
 
 #### Examples
 
@@ -28,14 +43,14 @@ Editing the file `cfg/config.yaml` or passing the arguments will allow the user 
 python main.py data_dir=/data/medley1/v1/Audio/AimeeNorwich_Child --dataset=medley_vocal --log_dir=~/medley_vocal_log
 ```
 What this command does is:
-- Run the retrieval process on every track in `AnimeeNorwich_Child` that has:
-  1. a vocal track and 
-  2. the track has a one-to-one mapping with a stem track.
+- Run the retrieval process on every track in `AnimeeNorwich_Child` that:
+  1. is a vocal track and 
+  2. has a one-to-one mapping with a stem track.
 - The training logs, best checkpoints for the lowest loss will be saved in the folder `~/medley_vocal_log`.
 - Repeat running the process on the same track will create new logs subfolders `run_0`, `run_1`, etc.
 
 The command will check if it's a valid vocal track and stop if it's not.
-For details on configuring the yaml file and passing arguments, please refer to the documentation of [hydra](https://hydra.cc/docs/intro/).
+
 
 ### Processing on multiple tracks
 
@@ -85,3 +100,7 @@ The latter contains the sample mean $\mathbb{R}^{130}$ and covariance $\mathbb{R
 The preset datasets, **Internal** and **MedleyDB**, are stored in the folder [`presets`](presets/).
 Both folders contain the files computed by the previous steps [collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) and [features for PCA analysis](#features-for-pca-analysis).
 The **Internal** folder contains one more numpy file `train_index.npy` which contains a 1D array of the indices $\mathbb{Z}^{365}$ of the training samples for the PCA we used in the paper.
+
+## Analysis notebooks
+
+Coming soon.
