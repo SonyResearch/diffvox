@@ -12,6 +12,7 @@ WIP. The accompanying code for the paper *DiffVox: A Differentiable Model for Ca
 - [Processing on multiple tracks](#processing-on-multiple-tracks)
     - [MedleyDB vocals](#medleydb-vocals)
 - [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs)
+- [Evaluation](#evaluation)
 - [Features for PCA analysis](#features-for-pca-analysis)
 - [Preset datasets](#preset-datasets)
 - [Analysis notebooks](#analysis-notebooks)
@@ -83,6 +84,18 @@ The script create a folder `selected-runs/medley_vox_0919-0926/` and store two f
 > **_Note:_**
 > - The `--end_date` argument is optional. If not provided, the script will collect the logs up to the current date.
 > - The script assume the collected training runs in the specified time range have the same effect configuration (run with the same `config.yaml`). Please make sure the training runs are consistent.
+
+## Evaluation
+
+The below command will compute the individual training losses of each presets on the corresponding tracks and save the results in `scores.csv`.
+```bash
+python loss_eval.py selected-runs/medley_vox_0919-0926/ scores.csv
+```
+Optional flags:
+- `--fx-config`: Manually specify the effect configuration. By default the script will use the effect configuration in the first training run in the folder. [presets/fx_config.yaml](presets/fx_config.yaml) is the one used in the paper. [presets/rt_config.yaml](presets/rt_config.yaml) replaces the FDN and delay with real-time version implemented in Numba (on CPU).
+- `--cpu`: Use CPU for the evaluation. By default the script assume GPU is available.
+- `--clip-Q`: This flag will clip the Q factor of the low-pass filter to 0.707 in the delay for numerical stability. This descrepancy is due to the FS approximation that does not reveal potential instability in the delay. 
+- `--no-process`: This flag will skip the processing of the audio files and directly compare the raw audio with the target audio. 
 
 ## Features for PCA analysis
 
