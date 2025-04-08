@@ -16,6 +16,8 @@ WIP. The accompanying code for the paper *DiffVox: A Differentiable Model for Ca
 - [Features for PCA analysis](#features-for-pca-analysis)
 - [Preset datasets](#preset-datasets)
 - [Analysis notebooks](#analysis-notebooks)
+- [Additional materials](#additional-materials)
+
 
 ## Environment setup
 
