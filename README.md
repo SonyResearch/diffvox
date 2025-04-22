@@ -1,6 +1,7 @@
 # Differentiable Vocal Effects Model
+[![arXiv](https://img.shields.io/badge/arXiv-2504.14735-b31b1b.svg)](https://arxiv.org/abs/2504.14735)
 
-WIP. The accompanying code for the paper *DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions* (under review).
+The accompanying code for the paper *DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions* (under review).
 
 
 ## Table of contents
@@ -123,3 +124,16 @@ Coming soon.
 ## Additional materials
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
   - The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
+
+## Citation
+ ```bibtex
+@misc{ycy2025diffvox,
+      title={DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions}, 
+      author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
+      year={2025},
+      eprint={2504.14735},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD},
+      url={https://arxiv.org/abs/2504.14735}, 
+}
+```
