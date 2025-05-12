@@ -119,7 +119,7 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 
 ## Analysis notebooks
 
-Coming soon.
+- [visualisation.ipynb](visualisation.ipynb): This notebook contains scripts to reproduce the figures and analysis in the paper.
 
 ## Additional materials
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
