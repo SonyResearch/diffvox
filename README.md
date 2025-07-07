@@ -118,13 +118,10 @@ The preset datasets, **Internal** and **MedleyDB**, are stored in the folder [`p
 Both folders contain the files computed by the previous steps [collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) and [features for PCA analysis](#features-for-pca-analysis).
 The **Internal** folder contains one more numpy file `train_index.npy` which contains a 1D array of the indices $\mathbb{Z}^{365}$ of the training samples for the PCA we used in the paper.
 
-## Analysis notebooks
+## Additional materials
 
 - [visualisation.ipynb](visualisation.ipynb): This notebook contains scripts to reproduce the figures and analysis in the paper.
-
-## Additional materials
-- [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
-  - The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
+- [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
 - [Listening test website](https://yoyolicoris.github.io/vocal-fx-mushra/): The website for the listening test of the vocal effects style transfer methods.
 
 ## Vocal effects style transfer
