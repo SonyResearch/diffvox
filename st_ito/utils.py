@@ -3,8 +3,7 @@ import yaml
 import torch
 import torchaudio
 import pyloudnorm as pyln
-
-from collections import OrderedDict
+from typing import Optional
 from importlib import import_module
 
 from modules.encoder import (
@@ -110,7 +109,7 @@ def get_param_embeds(
     return mid_embeddings, side_embeddings
 
 
-def load_param_model(ckpt_path: str = None):
+def load_param_model(ckpt_path: Optional[str] = None):
 
     if ckpt_path is None:  # look in tmp direcory
         ckpt_path = os.path.join(os.getcwd(), "tmp", "afx-rep.ckpt")
