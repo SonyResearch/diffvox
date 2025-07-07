@@ -205,7 +205,7 @@ python scripts/gather_scores.py model_A/ model_B/ ... model_N/ -o results.csv
 ```
 
 > **_Note:_**
-> - The evaluation results of oracle, mean, and NN-$\alpha$ baselines may contain tracks that are not evaluated by the other methods, as they do not need to split the audio into segments for the evaluation setting we described in the paper. The statistics we report in the paper are computed on the common tracks that all methods evaluated.
+> - The evaluation results of oracle, mean, and NN-$`\theta`$ baselines may contain tracks that are not evaluated by the other methods, as they do not need to split the audio into segments for the evaluation setting we described in the paper. The statistics we report in the paper are computed on the common tracks that all methods evaluated.
 
 ### Additional information on listening test
 
