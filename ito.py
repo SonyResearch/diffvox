@@ -183,7 +183,7 @@ def main():
     parser.add_argument(
         "--method",
         type=str,
-        choices=["ito", "gt", "nn_param", "nn_emb", "mean", "regression"],
+        choices=["ito", "oracle", "nn_param", "nn_emb", "mean", "regression"],
         default="ito",
     )
     parser.add_argument(
@@ -389,7 +389,7 @@ def main():
                     steps=args.steps,
                     weight=args.weight,
                 )
-            case "gt":
+            case "oracle":
                 pred_param = gt_param
             case "nn_param":
                 pred_param = train_params[
