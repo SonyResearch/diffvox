@@ -53,22 +53,16 @@ def logp_y_given_x(y, mu, std):
 
 def one_evaluation(
     fx: torch.nn.Module,
-    # afx_rep: torch.nn.Module,
     mid_side_embeds_fn: Callable[[torch.Tensor], tuple[torch.Tensor, torch.Tensor]],
     to_fx_state_dict: Callable[[torch.Tensor], dict],
     logp_x: Callable[[torch.Tensor], torch.Tensor],
     init_vec: torch.Tensor,
     ref_audio: torch.Tensor,
     raw_audio: torch.Tensor,
-    # sr: int,
-    # chunk_size: int,
     lr: float,
     steps: int,
     weight: float,
 ) -> torch.Tensor:
-    # ref_audio, raw_audio = get_reference_query_chunks(
-    #     dry_audio, wet_audio, chunk_size, sr
-    # )
 
     peak_scaler = 1 / ref_audio.abs().max()
     ref_audio = ref_audio * peak_scaler
@@ -79,7 +73,6 @@ def one_evaluation(
     optimiser = torch.optim.Adam([param_logits], lr=lr)
 
     with torch.no_grad():
-        # ref_mid_embs, ref_side_embs = get_param_embeds(ref_audio, afx_rep, sr)
         ref_mid_embs, ref_side_embs = mid_side_embeds_fn(ref_audio)
 
     with tqdm(range(steps), disable=True) as pbar:
@@ -89,11 +82,6 @@ def one_evaluation(
                 torch.func.functional_call(fx, cur_state_dict, raw_audio) * peak_scaler
             )
             mid_embs_pred, side_embs_pred = mid_side_embeds_fn(preds)
-            # mid_embs_pred, side_embs_pred = get_param_embeds(preds, afx_rep, sr)
-            # mid_mu = mid_embs_pred.mean(0)
-            # mid_mu = mid_mu / mid_mu.norm()
-            # side_mu = side_embs_pred.mean(0)
-            # side_mu = side_mu / side_mu.norm()
 
             mid_cos = torch.arccos(mid_embs_pred @ ref_mid_embs.T)
             side_cos = torch.arccos(side_embs_pred @ ref_side_embs.T)
@@ -141,12 +129,7 @@ def find_closest_training_sample(
     training_samples: torch.Tensor,
     ref_audio: torch.Tensor,
     raw_audio: torch.Tensor,
-    # sr: int,
-    # chunk_size: int,
 ) -> torch.Tensor:
-    # ref_audio, raw_audio = get_reference_query_chunks(
-    #     dry_audio, wet_audio, chunk_size, sr
-    # )
 
     peak_scaler = 1 / ref_audio.abs().max()
     ref_audio = ref_audio * peak_scaler
@@ -214,15 +197,6 @@ def main():
     # load PCA
     train_analysis_folder = Path(args.train_analysis_dir).resolve()
     eval_analysis_folder = Path(args.eval_analysis_dir).resolve()
-    # skops_file = train_analysis_folder / "pca.skops"
-    # unknown_types = sio.get_untrusted_types(file=skops_file)
-    # pca: PCA = sio.load(skops_file, trusted=unknown_types)
-    # # baseline_vec = torch.tensor(pca.mean_).cuda()
-    # if pca.whiten:
-    #     components = np.sqrt(pca.explained_variance_[:, np.newaxis]) * pca.components_
-    # else:
-    #     components = pca.components_
-    # components = torch.tensor(components).cuda()
 
     gauss_data = np.load(train_analysis_folder / "gaussian.npz")
     baseline_vec = torch.tensor(gauss_data["mean"]).cuda()
@@ -277,7 +251,6 @@ def main():
     fx.eval()
 
     fx.load_state_dict(vec2dict(baseline_vec), strict=False)
-    # print(fx)
 
     ndim_dict = {k: v.ndim for k, v in fx.state_dict().items()}
     to_fx_state_dict = lambda x: {
@@ -412,10 +385,6 @@ def main():
                     baseline_vec,
                     ref_audio,
                     raw_audio,
-                    # wet,
-                    # dry,
-                    # sr,
-                    # int(sr * args.chunk_duration),
                     lr=args.lr,
                     steps=args.steps,
                     weight=args.weight,
@@ -441,10 +410,6 @@ def main():
                     train_params,
                     ref_audio,
                     raw_audio,
-                    # wet,
-                    # dry,
-                    # sr,
-                    # int(sr * args.chunk_duration),
                 )
             case "mean":
                 pred_param = baseline_vec
@@ -465,8 +430,6 @@ def main():
         with torch.no_grad():
             rendered = fx(dry.unsqueeze(0)).squeeze()
 
-        # mss_loss = mss(rendered.unsqueeze(0), wet.unsqueeze(0)).item()
-        # mldr_loss = mldr(rendered, wet).item()
         loss = {
             k: f(rendered.unsqueeze(0), wet.unsqueeze(0)).item()
             for k, f in loss_fns.items()
@@ -474,9 +437,6 @@ def main():
         param_mse_loss = F.mse_loss(pred_param, gt_param).item()
         loss["param_mse"] = param_mse_loss
         print(", ".join([f"{k}: {v}" for k, v in loss.items()]))
-        # print(
-        #     f"MSS Loss: {mss_loss}, MDR Loss: {mldr_loss}, Param MSE Loss: {param_mse_loss}"
-        # )
 
         losses.append(loss)
         weights.append(wet.shape[1])
