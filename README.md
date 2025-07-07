@@ -131,30 +131,30 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 The section describe how to perform the same experiments as in the paper [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315).
 Please make sure you have done previous steps up until [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs).
 
-We will use the script `ito.py` to perform the inference-time optimisation (ITO) for vocal effects style transfer on the MedleyDB vocals dataset.
-It will create a folder that stores the evaluation results for each track as subfolders in the output directory.
+We use the script `ito.py` to do vocal effects style transfer on the MedleyDB vocals dataset.
+It would create a folder that stores the evaluation results with each track as a subfolder.
 
 ### Oracle
 
-The oracle model uses the parameters derived in the previous step [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) to process the target track.
-It serves as a upper bound for the performance of the ITO methods.
-The evaluation results should be the same as in the [Evaluation](#evaluation) step.
+The oracle model uses the presets derived in the previous step [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) to process the corresponding tracks.
+It serves as an upper bound for the performance of the ITO methods.
+The evaluation results are the same as in the [Evaluation](#evaluation) step.
 
 ```bash
-python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/oracle/ --config presets/fx_config.yaml --method oracle
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method oracle
 ```
 
 ### Mean
 
-The mean baseline uses the mean of the parameters in the internal datset to process every target track.
+This baseline uses the mean of the parameters in the internal datset to process every target track.
 
 ```bash
-python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/mean/ --config presets/fx_config.yaml --method mean
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method mean
 ```
 
 ### Nearest neighbour in parameter space (**NN-$\theta$**)
 
-This baseline picks a preset from the training set that has the closest parameters to the target track.
+This baseline picks a preset from the internal dataset that is most similar to the target presest.
 
 ```bash
 python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method nn_param
@@ -162,10 +162,10 @@ python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ ou
 
 ### Nearest neighbour in embedding space (**NN-***)
 
-The following command evaluate the nearest neighbour baselines with different embeddings on medleydb vocals.
+The following command evaluate the nearest neighbour baselines with different embeddings.
 
 ```bash
-python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method nn_emb --encoder encoder_type
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method nn_emb --encoder [encoder_type]
 ```
 
 `encoder_type` can be one of the following:
@@ -174,6 +174,37 @@ python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ ou
 - `mir`: Corresponds to **NN-MIR** in the paper.
 
 ### Regression
+
+We trained a simple CNN model on the internal dataset to predict the parameters from a given processed audio.
+The pre-trained weights are in the folder [`reg-ckpts`](reg-ckpts/).
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method regression --ckpt-dir reg-ckpts/
+```
+
+### ITO with Gaussian prior
+
+This method uses the Gaussian prior computed from the internal vocal presets to regularise the inference-time optimisation (ITO) process.
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method ito --encoder [encoder_type] --weight 0.1
+```
+
+The `--weight` argument corresponds to $\alpha$ in the paper, which is the weight of the Gaussian prior.
+Other arguments that can be passed to the script are:
+- `--lr`: The learning rate for the Adam optimiser. Default is `0.01`.
+- `--steps`: The number of optimisation steps. Default is `1000`.
+
+### Gather results
+
+Once you have folders of the evaluation results for each method, you can gather the results into a single CSV file for later analysis.
+
+```bash
+python scripts/gather_scores.py model_A/ model_B/ ... model_N/ -o results.csv
+```
+
+> **_Note:_**
+> - The evaluation results of oracle, mean, and NN-$\alpha$ baselines may contain tracks that are not evaluated by the other methods, as they do not need to split the audio into segments for the evaluation setting we described in the paper. The statistics we report in the paper are computed on the common tracks that all methods evaluated.
 
 ## Citation
  ```bibtex
