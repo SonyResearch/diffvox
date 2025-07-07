@@ -125,6 +125,7 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 ## Additional materials
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
   - The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
+- [Listening test website](https://yoyolicoris.github.io/vocal-fx-mushra/): The website for the listening test of the vocal effects style transfer methods.
 
 ## Vocal effects style transfer
 
@@ -205,6 +206,34 @@ python scripts/gather_scores.py model_A/ model_B/ ... model_N/ -o results.csv
 
 > **_Note:_**
 > - The evaluation results of oracle, mean, and NN-$\alpha$ baselines may contain tracks that are not evaluated by the other methods, as they do not need to split the audio into segments for the evaluation setting we described in the paper. The statistics we report in the paper are computed on the common tracks that all methods evaluated.
+
+### Additional information on listening test
+
+The following table list the track combinations used in the listening test for the paper.
+
+
+| Raw Vocal Track | Processed Vocal Track (Reference) |
+|:----------------:|:---------------------------------:|
+| LizNelson_ImComingHome | Torres_NewSkin |
+| MusicDelta_Disco | StevenClark_Bounty |
+| StevenClark_Bounty | HopAlong_SisterCities |
+| HopAlong_SisterCities | MusicDelta_Grunge |
+| MusicDelta_Grunge | MusicDelta_Gospel |
+| MusicDelta_Gospel | LizNelson_Rainfall |
+| LizNelson_Rainfall | BrandonWebster_YesSirICanFly |
+| BrandonWebster_YesSirICanFly | MusicDelta_Rockabilly |
+| MusicDelta_Rockabilly | PortStWillow_StayEven |
+| PortStWillow_StayEven | CatMartino_IPromise |
+| ClaraBerryAndWooldog_WaltzForMyVictims | MusicDelta_80sRock |
+| MusicDelta_80sRock | TheScarletBrand_LesFleursDuMal |
+| TheScarletBrand_LesFleursDuMal | BigTroubles_Phantom |
+| BigTroubles_Phantom | StrandOfOaks_Spacestation |
+| StrandOfOaks_Spacestation | MusicDelta_Beatles |
+| MusicDelta_Beatles | MutualBenefit_NotForNothing |
+| MutualBenefit_NotForNothing | MidnightBlue_StarsAreScreaming |
+| LizNelson_Coldwar | MusicDelta_Britpop |
+| MusicDelta_Britpop | AClassicEducation_NightOwl |
+
 
 ## Citation
  ```bibtex
