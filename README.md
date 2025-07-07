@@ -124,7 +124,7 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
 - [Listening test website](https://yoyolicoris.github.io/vocal-fx-mushra/): The website for the listening test of the vocal effects style transfer methods.
 
-## Vocal effects style transfer
+## Vocal effects style transfer evaluation
 
 The section describe how to perform the same experiments as in the paper [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315).
 Please make sure you have done previous steps up until [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs).
