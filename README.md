@@ -126,6 +126,55 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): 
   - The raw data of the evaluation metrics per track for the paper and the spearman correlation coefficients between the parameters on the two datasets.
 
+## Vocal effects style transfer
+
+The section describe how to perform the same experiments as in the paper [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315).
+Please make sure you have done previous steps up until [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs).
+
+We will use the script `ito.py` to perform the inference-time optimisation (ITO) for vocal effects style transfer on the MedleyDB vocals dataset.
+It will create a folder that stores the evaluation results for each track as subfolders in the output directory.
+
+### Oracle
+
+The oracle model uses the parameters derived in the previous step [Collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) to process the target track.
+It serves as a upper bound for the performance of the ITO methods.
+The evaluation results should be the same as in the [Evaluation](#evaluation) step.
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/oracle/ --config presets/fx_config.yaml --method oracle
+```
+
+### Mean
+
+The mean baseline uses the mean of the parameters in the internal datset to process every target track.
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/mean/ --config presets/fx_config.yaml --method mean
+```
+
+### Nearest neighbour in parameter space (**NN-$\theta$**)
+
+This baseline picks a preset from the training set that has the closest parameters to the target track.
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method nn_param
+```
+
+### Nearest neighbour in embedding space (**NN-***)
+
+The following command evaluate the nearest neighbour baselines with different embeddings on medleydb vocals.
+
+```bash
+python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method nn_emb --encoder encoder_type
+```
+
+`encoder_type` can be one of the following:
+- `afx_rep`: Corresponds to **NN-AFx-Rep** in the paper.
+- `mfcc`: Corresponds to **NN-MFCC** in the paper.
+- `mir`: Corresponds to **NN-MIR** in the paper.
+
+### Regression
+
 ## Citation
  ```bibtex
 @misc{ycy2025diffvox,
