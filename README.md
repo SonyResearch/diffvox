@@ -167,7 +167,7 @@ python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ ou
 ```
 
 `encoder_type` can be one of the following:
-- `afx_rep`: Corresponds to **NN-AFx-Rep** in the paper.
+- `afx-rep`: Corresponds to **NN-AFx-Rep** in the paper.
 - `mfcc`: Corresponds to **NN-MFCC** in the paper.
 - `mir`: Corresponds to **NN-MIR** in the paper.
 
