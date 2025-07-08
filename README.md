@@ -2,7 +2,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2504.14735-b31b1b.svg)](https://arxiv.org/abs/2504.14735)
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/yoyolicoris/diffvox)
 
-The accompanying code for the paper *DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions* (under review).
+The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25).
 
 
 ## Table of contents
@@ -128,13 +128,10 @@ The **Internal** folder contains one more numpy file `train_index.npy` which con
 
 ## Citation
  ```bibtex
-@misc{ycy2025diffvox,
+@inproceedings{ycy2025diffvox,
       title={DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions}, 
       author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
       year={2025},
-      eprint={2504.14735},
-      archivePrefix={arXiv},
-      primaryClass={cs.SD},
-      url={https://arxiv.org/abs/2504.14735}, 
+      booktitle={Proc. Digital Audio Effects (DAFx-25)},
 }
 ```
