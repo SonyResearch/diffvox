@@ -1,8 +1,9 @@
 # Differentiable Vocal Effects Model
 [![arXiv](https://img.shields.io/badge/arXiv-2504.14735-b31b1b.svg)](https://arxiv.org/abs/2504.14735)
+[![arXiv](https://img.shields.io/badge/arXiv-2505.11315-b31b1b.svg)](https://arxiv.org/abs/2505.11315)
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/yoyolicoris/diffvox)
 
-The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25).
+The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025).
 
 
 ## Table of contents
