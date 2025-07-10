@@ -1,0 +1,328 @@
+# lightning.pytorch==2.4.0
+seed_everything: false
+trainer:
+  accelerator: gpu
+  strategy: auto
+  devices: 1
+  num_nodes: 1
+  precision: null
+  logger:
+    class_path: lightning.pytorch.loggers.WandbLogger
+    init_args:
+      name: null
+      save_dir: .
+      version: null
+      offline: false
+      dir: null
+      id: null
+      anonymous: null
+      project: vocal-fx-regression
+      log_model: false
+      experiment: null
+      prefix: ''
+      checkpoint_name: null
+      job_type: null
+      config: null
+      entity: null
+      reinit: null
+      tags: null
+      group: null
+      notes: null
+      magic: null
+      config_exclude_keys: null
+      config_include_keys: null
+      mode: null
+      allow_val_change: null
+      resume: null
+      force: null
+      tensorboard: null
+      sync_tensorboard: null
+      monitor_gym: null
+      save_code: null
+      fork_from: null
+      resume_from: null
+      settings: null
+  callbacks:
+  - class_path: lightning.pytorch.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: null
+      filename: '{epoch}-{step}-{val_loss:.3f}'
+      monitor: val_loss
+      verbose: false
+      save_last: true
+      save_top_k: 3
+      save_weights_only: false
+      mode: min
+      auto_insert_metric_name: true
+      every_n_train_steps: null
+      train_time_interval: null
+      every_n_epochs: 10
+      save_on_train_epoch_end: null
+      enable_version_counter: true
+  fast_dev_run: false
+  max_epochs: null
+  min_epochs: null
+  max_steps: 100000
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 10
+  num_sanity_val_steps: 2
+  log_every_n_steps: 1
+  enable_checkpointing: null
+  enable_progress_bar: null
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: null
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: null
+ckpt_path: null
+data:
+  class_path: ltng.aug_data.GenDataModule
+  init_args:
+    train_root: /data2/chin-yun/sub_train
+    batch_size: 64
+    val_root: /data2/chin-yun/sub_val
+    test_root: null
+optimizer:
+  class_path: torch.optim.AdamW
+  init_args:
+    lr: 0.001
+    betas:
+    - 0.9
+    - 0.999
+    eps: 1.0e-08
+    weight_decay: 0.01
+    amsgrad: false
+    maximize: false
+    foreach: null
+    capturable: false
+    differentiable: false
+    fused: null
+model:
+  class_path: ltng.regression.ParamPrediction
+  init_args:
+    predictor:
+      class_path: modules.model.LightningSequential
+      init_args:
+        modules:
+        - class_path: modules.encoder.MapAndMerge
+          init_args:
+            funcs:
+            - class_path: torch.nn.Identity
+            - class_path: modules.fx.Hadamard
+            dim: 1
+        - class_path: modules.encoder.MapAndMerge
+          init_args:
+            funcs:
+            - class_path: modules.model.LightningSequential
+              init_args:
+                modules:
+                - class_path: modules.encoder.Frame
+                  init_args:
+                    frame_length: 1024
+                    hop_length: 256
+                    center: true
+                - class_path: modules.encoder.MapAndMerge
+                  init_args:
+                    funcs:
+                    - class_path: modules.encoder.LogRMS
+                    - class_path: modules.encoder.LogCrest
+                    - class_path: modules.encoder.LogSpread
+                    dim: -2
+            - class_path: modules.model.LogMelSpectrogram
+              init_args:
+                sample_rate: 44100
+                n_fft: 1024
+                win_length: null
+                hop_length: 256
+                f_min: 0.0
+                f_max: null
+                pad: 0
+                n_mels: 80
+                window_fn: torch.hann_window
+                power: 2.0
+                normalized: false
+                wkwargs: null
+                center: true
+                pad_mode: reflect
+                onesided: null
+                norm: null
+                mel_scale: htk
+            dim: -2
+        - class_path: torch.nn.Flatten
+          init_args:
+            start_dim: 1
+            end_dim: -2
+        - class_path: torch.nn.Conv1d
+          init_args:
+            in_channels: 332
+            out_channels: 512
+            kernel_size: 5
+            stride: 1
+            padding: 0
+            dilation: 1
+            groups: 1
+            bias: true
+            padding_mode: zeros
+            device: null
+            dtype: null
+        - class_path: torch.nn.AvgPool1d
+          init_args:
+            kernel_size: 3
+            stride: 3
+            padding: 0
+            ceil_mode: false
+            count_include_pad: true
+        - class_path: torch.nn.BatchNorm1d
+          init_args:
+            num_features: 512
+            eps: 1.0e-05
+            momentum: 0.1
+            affine: true
+            track_running_stats: true
+            device: null
+            dtype: null
+        - class_path: torch.nn.ReLU
+          init_args:
+            inplace: false
+        - class_path: torch.nn.Conv1d
+          init_args:
+            in_channels: 512
+            out_channels: 512
+            kernel_size: 5
+            stride: 1
+            padding: 0
+            dilation: 1
+            groups: 1
+            bias: true
+            padding_mode: zeros
+            device: null
+            dtype: null
+        - class_path: torch.nn.AvgPool1d
+          init_args:
+            kernel_size: 3
+            stride: 3
+            padding: 0
+            ceil_mode: false
+            count_include_pad: true
+        - class_path: torch.nn.BatchNorm1d
+          init_args:
+            num_features: 512
+            eps: 1.0e-05
+            momentum: 0.1
+            affine: true
+            track_running_stats: true
+            device: null
+            dtype: null
+        - class_path: torch.nn.ReLU
+          init_args:
+            inplace: false
+        - class_path: torch.nn.Conv1d
+          init_args:
+            in_channels: 512
+            out_channels: 768
+            kernel_size: 5
+            stride: 1
+            padding: 0
+            dilation: 1
+            groups: 1
+            bias: true
+            padding_mode: zeros
+            device: null
+            dtype: null
+        - class_path: torch.nn.AvgPool1d
+          init_args:
+            kernel_size: 3
+            stride: 3
+            padding: 0
+            ceil_mode: false
+            count_include_pad: true
+        - class_path: torch.nn.BatchNorm1d
+          init_args:
+            num_features: 768
+            eps: 1.0e-05
+            momentum: 0.1
+            affine: true
+            track_running_stats: true
+            device: null
+            dtype: null
+        - class_path: torch.nn.ReLU
+          init_args:
+            inplace: false
+        - class_path: torch.nn.Conv1d
+          init_args:
+            in_channels: 768
+            out_channels: 1024
+            kernel_size: 5
+            stride: 1
+            padding: 0
+            dilation: 1
+            groups: 1
+            bias: true
+            padding_mode: zeros
+            device: null
+            dtype: null
+        - class_path: torch.nn.AvgPool1d
+          init_args:
+            kernel_size: 3
+            stride: 3
+            padding: 0
+            ceil_mode: false
+            count_include_pad: true
+        - class_path: torch.nn.BatchNorm1d
+          init_args:
+            num_features: 1024
+            eps: 1.0e-05
+            momentum: 0.1
+            affine: true
+            track_running_stats: true
+            device: null
+            dtype: null
+        - class_path: torch.nn.ReLU
+          init_args:
+            inplace: false
+        - class_path: torch.nn.Conv1d
+          init_args:
+            in_channels: 1024
+            out_channels: 1024
+            kernel_size: 1
+            stride: 1
+            padding: 0
+            dilation: 1
+            groups: 1
+            bias: true
+            padding_mode: zeros
+            device: null
+            dtype: null
+        - class_path: torch.nn.AdaptiveMaxPool1d
+          init_args:
+            output_size: 1
+            return_indices: false
+        - class_path: torch.nn.Flatten
+          init_args:
+            start_dim: 1
+            end_dim: -1
+        - class_path: torch.nn.Linear
+          init_args:
+            in_features: 1024
+            out_features: 130
+            bias: true
+            device: null
+            dtype: null
+    condition: wet
