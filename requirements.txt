@@ -11,6 +11,7 @@ torchvision
 torchlpc
 torchcomp
 torch_fftconv
+torchlibrosa
 kazane
 soundfile
 librosa

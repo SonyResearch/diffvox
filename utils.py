@@ -90,52 +90,6 @@ def ShaWilstat(x):
         Shapiro-Wilk's W statistic.
     """
     return shapiro(x)[0]
-    x = np.sort(x)
-    n = len(x)
-
-    if n < 3:
-        raise ValueError("Sample vector must have at least 3 valid observations.")
-    if n > 5000:
-        print(
-            "Warning: Shapiro-Wilk statistic might be inaccurate due to large sample size ( > 5000)."
-        )
-
-    m = norm.ppf((np.arange(1, n + 1) - 3 / 8) / (n + 0.25))
-    w = np.zeros(n)
-
-    if kurtosis(x) > 3:
-        w = 1 / np.sqrt(np.sum(m**2)) * m
-        W = (np.sum(w * x)) ** 2 / np.sum((x - np.mean(x)) ** 2)
-    else:
-        c = 1 / np.sqrt(np.sum(m**2)) * m
-        u = 1 / np.sqrt(n)
-        p1 = [-2.706056, 4.434685, -2.071190, -0.147981, 0.221157, c[-1]]
-        p2 = [-3.582633, 5.682633, -1.752461, -0.293762, 0.042981, c[-2]]
-
-        w[-1] = np.polyval(p1, u)
-        w[0] = -w[-1]
-
-        if n == 3:
-            w[0] = 0.707106781
-            w[-1] = -w[0]
-
-        if n >= 6:
-            w[-2] = np.polyval(p2, u)
-            w[1] = -w[-2]
-
-            ct = 3
-            phi = (np.sum(m**2) - 2 * m[-1] ** 2 - 2 * m[-2] ** 2) / (
-                1 - 2 * w[-1] ** 2 - 2 * w[-2] ** 2
-            )
-        else:
-            ct = 2
-            phi = (np.sum(m**2) - 2 * m[-1] ** 2) / (1 - 2 * w[-1] ** 2)
-
-        w[ct - 1 : n - ct + 1] = m[ct - 1 : n - ct + 1] / np.sqrt(phi)
-
-        W = (np.sum(w * x)) ** 2 / np.sum((x - np.mean(x)) ** 2)
-
-    return W
 
 
 @torch.no_grad()
@@ -165,3 +119,25 @@ def get_log_mags_from_eq(eq: Iterable, worN=1024, sr=44100):
 
     log_mags = list(map(f, eq))
     return log_mags[0][0], [x for _, x in log_mags]
+
+
+jsonparse2hydra = lambda d: (
+    (
+        {"_target_": d["class_path"]}
+        | (
+            {k: jsonparse2hydra(v) for k, v in d["init_args"].items()}
+            if "init_args" in d
+            else {}
+        )
+        if "class_path" in d
+        else {k: jsonparse2hydra(v) for k, v in d.items()}
+    )
+    if isinstance(d, dict)
+    else (list(map(jsonparse2hydra, d)) if isinstance(d, list) else d)
+)
+
+remove_window_fn = lambda d: (
+    {k: remove_window_fn(v) for k, v in d.items() if k != "window_fn"}
+    if isinstance(d, dict)
+    else (list(map(remove_window_fn, d)) if isinstance(d, list) else d)
+)
