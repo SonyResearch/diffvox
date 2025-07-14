@@ -182,6 +182,7 @@ python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ ou
 
 We trained a simple CNN model on the internal dataset to predict the parameters from a given processed audio.
 The pre-trained weights are in the folder [`reg-ckpts`](reg-ckpts/).
+To download it, please ensure you have [git-lfs](https://git-lfs.com/) installed when cloning the repository.
 
 ```bash
 python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method regression --ckpt-dir reg-ckpts/
