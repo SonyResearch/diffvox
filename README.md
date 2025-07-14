@@ -3,7 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2505.11315-b31b1b.svg)](https://arxiv.org/abs/2505.11315)
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/yoyolicoris/diffvox)
 
-The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025).
+The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025).
 
 
 ## Table of contents
@@ -251,7 +251,7 @@ The following table list the track combinations used in the listening test for t
 If you use this code or the datasets, please cite the following paper:
  ```bibtex
 @inproceedings{ycy2025diffvox,
-      title={DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions}, 
+      title={DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions}, 
       author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
       year={2025},
       booktitle={Proc. DAFx},
