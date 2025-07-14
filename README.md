@@ -18,7 +18,17 @@ The accompanying code for the paper [DiffVox: A Differentiable Model for Capturi
 - [Evaluation](#evaluation)
 - [Features for PCA analysis](#features-for-pca-analysis)
 - [Preset datasets](#preset-datasets)
+- [Vocal effects style transfer evaluation](#vocal-effects-style-transfer-evaluation)
+    - [Oracle](#oracle)
+    - [Mean](#mean)
+    - [Nearest neighbour in parameter space (NN-$\theta$)](#nearest-neighbour-in-parameter-space-nn-$\theta$)
+    - [Nearest neighbour in embedding space (NN-*)](#nearest-neighbour-in-embedding-space-nn-*)
+    - [Regression](#regression)
+    - [ITO with Gaussian prior](#ito-with-gaussian-prior)
+    - [Gather results](#gather-results)
+    - [Additional information on listening test](#additional-information-on-listening-test)
 - [Additional materials](#additional-materials)
+- [Citation](#citation)
 
 
 ## Environment setup
@@ -117,6 +127,8 @@ The latter contains the sample mean $\mathbb{R}^{130}$ and covariance $\mathbb{R
 The preset datasets, **Internal** and **MedleyDB**, are stored in the folder [`presets`](presets/).
 Both folders contain the files computed by the previous steps [collecting presets from multiple training runs](#collecting-presets-from-multiple-training-runs) and [features for PCA analysis](#features-for-pca-analysis).
 The **Internal** folder contains one more numpy file `train_index.npy` which includes a 1D array of the indices $\mathbb{Z}^{365}$ of the training samples for the PCA we used in the paper.
+
+The presets and a subset of the codebase are also available on [Hugging Face](https://huggingface.co/datasets/yoyolicoris/diffvox) for building our [interactive demo](https://huggingface.co/spaces/yoyolicoris/diffvox).
 
 
 ## Vocal effects style transfer evaluation
@@ -235,11 +247,23 @@ The following table list the track combinations used in the listening test for t
 - [Evaluation data sheet (WASPAA)](https://docs.google.com/spreadsheets/d/1e9a5_iD57iNpvWDsRtZwa5itijMGi57zFHi-_nQzeLM/edit?usp=sharing): The spreadsheet we use to compute the final metrics in the WASPAA paper.
 
 ## Citation
+
+If you use this code or the datasets, please cite the following paper:
  ```bibtex
 @inproceedings{ycy2025diffvox,
       title={DiffVox: A Differentiable Model for Capturing and Analysing Professional Effects Distributions}, 
       author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
       year={2025},
-      booktitle={Proc. Digital Audio Effects (DAFx-25)},
+      booktitle={Proc. DAFx},
+}
+```
+
+If you use our vocal effects style transfer methods, please cite the following as well:
+ ```bibtex
+@inproceedings{ycy2025ito,
+      title={Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior}, 
+      author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Ben Hayes and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
+      year={2025},
+      booktitle={Proc. WASPAA},
 }
 ```
