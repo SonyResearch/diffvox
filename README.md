@@ -21,7 +21,7 @@ The accompanying code for the paper [DiffVox: A Differentiable Model for Capturi
 - [Vocal effects style transfer evaluation](#vocal-effects-style-transfer-evaluation)
     - [Oracle](#oracle)
     - [Mean](#mean)
-    - [Nearest neighbour in parameter space (NN-$\theta$)](#nearest-neighbour-in-parameter-space-nn-$\theta$)
+    - [Nearest neighbour in parameter space (NN-$`\theta`$)](#nearest-neighbour-in-parameter-space-nn-$`\theta`$)
     - [Nearest neighbour in embedding space (NN-*)](#nearest-neighbour-in-embedding-space-nn-*)
     - [Regression](#regression)
     - [ITO with Gaussian prior](#ito-with-gaussian-prior)
@@ -157,7 +157,7 @@ This baseline uses the mean of the parameters in the internal datset to process 
 python -W ignore ito.py selected-runs/medley_vox_0919-0926/ presets/internal/ output_dir/ --config presets/fx_config.yaml --method mean
 ```
 
-### Nearest neighbour in parameter space (**NN-$\theta$**)
+### Nearest neighbour in parameter space (**NN-$`\theta`$**)
 
 This baseline picks a preset from the internal dataset that is most similar to the target presest.
 
@@ -243,7 +243,7 @@ The following table list the track combinations used in the listening test for t
 
 - [visualisation.ipynb](visualisation.ipynb): This notebook contains scripts to reproduce the figures and analysis in the DAFx paper.
 - [Evaluation raw data](https://docs.google.com/spreadsheets/d/1ksSylBki1151pLR4-GebQBUYForlUKAy20fUdlyADhA/edit?usp=sharing): The raw data of the evaluation metrics per track for the DAFx paper and the spearman correlation coefficients between the parameters on the two datasets.
-- [Listening test website](https://yoyolicoris.github.io/vocal-fx-mushra/): The website for the listening test of the vocal effects style transfer methods.
+- [Listening test website](https://yoyolicoris.github.io/vocal-fx-mushra/): The website that was used to gather subjective ratings for the vocal effects style transfer methods.
 - [Evaluation data sheet (WASPAA)](https://docs.google.com/spreadsheets/d/1e9a5_iD57iNpvWDsRtZwa5itijMGi57zFHi-_nQzeLM/edit?usp=sharing): The spreadsheet we use to compute the final metrics in the WASPAA paper.
 
 ## Citation
