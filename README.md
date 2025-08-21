@@ -3,11 +3,12 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2505.11315-b31b1b.svg)](https://arxiv.org/abs/2505.11315)
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/yoyolicoris/diffvox)
 
-The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025).
+The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025). 
+
+For a quick overview of our work, we recommend checking out the [audio samples](https://iamycy.github.io/diffvox-demo/) or the [interactive demo](https://huggingface.co/spaces/yoyolicoris/diffvox).
 
 
 ## Table of contents
-- [Requirements](#requirements)
 - [Environment setup](#environment-setup)
 - [Retrieving effect parameters on paired data](#retrieving-effect-parameters-on-paired-data)
 - [Quick start](#quick-start)
@@ -21,8 +22,8 @@ The accompanying code for the paper [DiffVox: A Differentiable Model for Capturi
 - [Vocal effects style transfer evaluation](#vocal-effects-style-transfer-evaluation)
     - [Oracle](#oracle)
     - [Mean](#mean)
-    - [Nearest neighbour in parameter space (NN-$`\theta`$)](#nearest-neighbour-in-parameter-space-nn-$`\theta`$)
-    - [Nearest neighbour in embedding space (NN-*)](#nearest-neighbour-in-embedding-space-nn-*)
+    - [Nearest neighbour in parameter space (NN-$`\theta`$)](#nearest-neighbour-in-parameter-space-nn-theta)
+    - [Nearest neighbour in embedding space (NN-*)](#nearest-neighbour-in-embedding-space-nn-)
     - [Regression](#regression)
     - [ITO with Gaussian prior](#ito-with-gaussian-prior)
     - [Gather results](#gather-results)
