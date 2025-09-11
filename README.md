@@ -3,7 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2505.11315-b31b1b.svg)](https://arxiv.org/abs/2505.11315)
 [![huggingface](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Space-blue)](https://huggingface.co/spaces/yoyolicoris/diffvox)
 
-The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions](https://arxiv.org/abs/2504.14735) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025). 
+The accompanying code for the paper [DiffVox: A Differentiable Model for Capturing and Analysing Vocal Effects Distributions](https://dafx25.dii.univpm.it/wp-content/uploads/2025/07/DAFx25_paper_9.pdf) (accepted at DAFx25) and [Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior](https://arxiv.org/abs/2505.11315) (accepted at WASPAA 2025). 
 
 For a quick overview of our work, we recommend checking out the [audio samples](https://iamycy.github.io/diffvox-demo/) or the [interactive demo](https://huggingface.co/spaces/yoyolicoris/diffvox).
 
