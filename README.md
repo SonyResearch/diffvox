@@ -265,7 +265,7 @@ If you use our vocal effects style transfer methods, please cite the following a
  ```bibtex
 @inproceedings{ycy2025ito,
       title={Improving Inference-Time Optimisation for Vocal Effects Style Transfer with a Gaussian Prior}, 
-      author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Wei-Hsiang Liao and György Fazekas and Yuki Mitsufuji},
+      author={Chin-Yun Yu and Marco A. Martínez-Ramírez and Junghyun Koo and Wei-Hsiang Liao and Yuki Mitsufuji and György Fazekas},
       year={2025},
       booktitle={Proc. WASPAA},
 }
